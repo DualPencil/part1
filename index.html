@@ -27,15 +27,14 @@ body {
 }
 
 .sprite-container {
-  position: relative; /* so it moves with the flex centering */
-  top: 0; /* remove that -150px */
+  position: relative;
+  top: 0;
   left: 50%;
   transform: translateX(-50%) scale(1);
   transition: transform 3s linear;
   z-index: 1;
 }
 
-/* Center just the start screen */
 #start-container {
   display: flex;
   flex-direction: column;
@@ -46,16 +45,14 @@ body {
   z-index: 2;
 }
 
-/* Keep #ui just for dialogue card at bottom */
 #ui {
   position: relative;
   z-index: 2;
 }
 
-/* dialogue card at bottom */
 .card {
-  position: absolute;  /* absolute works here */
-  bottom: 30px;        /* fixed distance from bottom */
+  position: absolute; 
+  bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
   background: rgba(0, 0, 0, 0.35);
@@ -70,20 +67,15 @@ body {
   z-index: 10;
 }
 
-
 #bg-slide.active {
   left: 0;
 }
 
-/* UI fade */
 .fade-out {
   opacity: 0;
   transition: opacity 0.5s ease;
 }
 
-
-
-  /* light theme when bg turns pink */
 .ui-light {
   color: #1E1B2E;
 }
@@ -144,8 +136,7 @@ button {
   transform: scale(1.1);
   opacity: 1;
 }
-  
-/* panda */
+
 .sprite-container {
   position: absolute;
   top: -150px;
@@ -198,7 +189,7 @@ button {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 0 220px; /* ⬅️ bigger buffer */
+  padding: 0 220px; 
 }
 
 #yesBtn {
@@ -229,7 +220,6 @@ button {
   transform: none;
 }
 
-/* YES SCREEN */
 .yes-screen {
   background: url("yes.png") center/cover no-repeat;
 }
@@ -238,7 +228,6 @@ button {
 </head>
 
 <body>
-
 <div id="bg-slide"></div>
 
 <div id="ui">
@@ -287,7 +276,6 @@ const noBtn = document.getElementById("noBtn");
 
 const speed = 40;
 
-// --- Dialogue sequences ---
 const firstDialogue = ["HELLOOOO BACOOOO HAHAHAHA", "whats upp hows your day"];
 
 const sharedDialogue = [
@@ -314,15 +302,13 @@ const postFirstDialogues = [
   "...just a question..."
 ];
 
-// --- State variables ---
 let dialogues = [];
 let dialogueIndex = 0;
 let charIndex = 0;
 let isTyping = false;
 let waitingForInput = false;
-let currentDialogueSet = "firstDialogue"; // track which set is active
+let currentDialogueSet = "firstDialogue";
 
-// --- Helper functions ---
 function startTalking() { sprite.src = "talk.gif"; }
 function stopTalking() { sprite.src = "neutral_scaled.png"; }
 
@@ -351,15 +337,12 @@ function nextDialogue() {
   charIndex = 0;
   dialogueIndex++;
 
-  // Check if we're at the end of current dialogue set
   if (dialogueIndex < dialogues.length) {
     typeDialogue();
   } else {
     if (currentDialogueSet === "firstDialogue") {
-      // Show choice buttons **after the last line of firstDialogue**
       choicesEl.style.display = "flex";
     } else {
-      // Finished everything → show final screen
       card.style.display = "none";
       finalScreen.style.display = "block";
     }
@@ -376,9 +359,7 @@ function startNewDialogue(newDialogues, setName) {
   typeDialogue();
 }
 
-// --- Choices handlers ---
 choice1.onclick = () => {
-  // "Amazing yass" path
   const amazingDialogue = [
   "AS IT SHOULD BE😤",
   "but okay hopefully this dont ruin it for you HELPP"
@@ -390,7 +371,6 @@ startNewDialogue(
 };
 
 choice2.onclick = () => {
-  // "Ehhhh" path
   const ehDialogue = [
     "...well damn i was hoping you dont press that",
     "hayss okay you can yap abt that to me later if you havent already",
@@ -399,11 +379,9 @@ choice2.onclick = () => {
   startNewDialogue(ehDialogue.concat(sharedDialogue, postFirstDialogues), "postDialogue");
 };
 
-// --- Card click / spacebar advance ---
 card.onclick = () => { if (!isTyping) nextDialogue(); };
 document.onkeydown = e => { if (e.code === "Space" && !isTyping) nextDialogue(); };
 
-// --- Start button animation ---
 startBtn.onclick = () => {
   startBtn.style.display = "none";
 
@@ -422,7 +400,6 @@ startBtn.onclick = () => {
   setTimeout(() => startNewDialogue(firstDialogue, "firstDialogue"), 11000);
 };
 
-// --- Final screen YES/NO fun ---
 if (noBtn && yesBtn) {
   noBtn.addEventListener("mouseenter", () => {
   const margin = 180;
@@ -450,14 +427,12 @@ if (noBtn && yesBtn) {
   });
   
   yesBtn.onclick = () => {
-  // remove everything
   document.getElementById("ui").style.display = "none";
   document.getElementById("bg-slide").style.display = "none";
   document.getElementById("spriteContainer").style.display = "none";
   document.getElementById("final-screen").style.display = "none";
   noBtn.style.display = "none";
 
-  // change background to YES image
   document.body.classList.add("yes-screen");
 };
 }
@@ -465,3 +440,4 @@ if (noBtn && yesBtn) {
 
 </body>
 </html>
+
